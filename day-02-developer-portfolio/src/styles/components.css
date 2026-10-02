@@ -7,6 +7,8 @@
 .nav-actions { display: flex; align-items: center; gap: 10px; }
 .theme-toggle { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); cursor: pointer; }
 .contact-link { min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 15px; border-radius: 999px; background: var(--text); color: var(--bg); text-decoration: none; font-size: 12px; font-weight: 800; }
+.theme-toggle:hover, .project-arrow:hover { transform: rotate(7deg); }
+.theme-toggle:focus-visible, .project-arrow:focus-visible, .nav-links a:focus-visible, .contact-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .section-heading { display: grid; grid-template-columns: .72fr 1.28fr; gap: 50px; margin-bottom: 58px; align-items: end; }
 .section-heading.compact { margin-bottom: 44px; }
 .section-heading > div { display: flex; align-items: center; gap: 12px; }
