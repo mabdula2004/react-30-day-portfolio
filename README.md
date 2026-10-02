@@ -8,7 +8,7 @@ A 30-day portfolio challenge focused on building modern React interfaces, then p
 - **Days 16–30:** UI + JavaScript / React logic
 - Later days introduce React Native and Supabase
 - Projects are responsive, reusable, and portfolio-ready
-- Light and dark themes are included across the challenge
+- Light and dark themes are included where appropriate
 
 ## Projects
 
@@ -21,5 +21,10 @@ A polished authentication interface featuring a responsive split-screen layout, 
 Path: `day-02-developer-portfolio/`
 
 An editorial developer portfolio with oversized typography, selected work cards, about/skills, experience timeline, contact CTA, modular responsive CSS, and persistent light/dark themes.
+
+### Day 03 — Lumen SaaS Analytics Landing Page
+Path: `day-03-saas-analytics/`
+
+A premium analytics SaaS experience with a product-first hero, realistic dashboard preview, revenue visualization, feature storytelling, customer proof, pricing, responsive mobile navigation, and a distinctive dark-green/lime editorial visual system.
 
 More projects will be added day by day.
