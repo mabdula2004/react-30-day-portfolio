@@ -1,0 +1,17 @@
+.navbar { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.logo { text-decoration: none; font-size: 22px; font-weight: 900; letter-spacing: -.05em; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a, .footer-row a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 650; }
+.nav-links a:hover, .footer-row a:hover { color: var(--text); }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.theme-toggle { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); cursor: pointer; }
+.contact-link { min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 15px; border-radius: 999px; background: var(--text); color: var(--bg); text-decoration: none; font-size: 12px; font-weight: 800; }
+.section-heading { display: grid; grid-template-columns: .72fr 1.28fr; gap: 50px; margin-bottom: 58px; align-items: end; }
+.section-heading.compact { margin-bottom: 44px; }
+.section-heading > div { display: flex; align-items: center; gap: 12px; }
+.section-index { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-size: 10px; }
+.section-heading p { margin: 0; font-size: 11px; font-weight: 850; letter-spacing: .12em; }
+.section-heading h2 { margin: 0; max-width: 760px; font-size: clamp(38px, 5vw, 68px); line-height: 1; letter-spacing: -.055em; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag-row span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 10px; font-weight: 750; }
