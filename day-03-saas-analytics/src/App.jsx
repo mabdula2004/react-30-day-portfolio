@@ -1,0 +1,1 @@
+import Nav from'./components/Nav';import Hero from'./components/Hero';import{LogoStrip,Features,Proof,Pricing,Footer}from'./components/Sections';export default function App(){return <><Nav/><Hero/><LogoStrip/><Features/><Proof/><Pricing/><Footer/></>}
