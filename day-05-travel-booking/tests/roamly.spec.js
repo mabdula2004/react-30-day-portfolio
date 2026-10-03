@@ -6,6 +6,11 @@ const assertNoOverflow = async page => {
   expect(dimensions.scroll, `horizontal overflow: ${dimensions.scroll}px > ${dimensions.client}px`).toBeLessThanOrEqual(dimensions.client + 1)
 }
 
+const openMobileNavIfNeeded = async page => {
+  const menu = page.getByRole('button', { name: 'Toggle navigation' })
+  if (await menu.isVisible()) await menu.click()
+}
+
 test('responsive discovery journey has no horizontal overflow', async ({ page }, testInfo) => {
   fs.mkdirSync('artifacts', { recursive: true })
   await page.goto('/')
@@ -25,21 +30,23 @@ test('responsive discovery journey has no horizontal overflow', async ({ page },
   await assertNoOverflow(page)
 })
 
-test('saved empty and search states remain usable', async ({ page }) => {
+test('saved and search states remain usable', async ({ page }) => {
   await page.goto('/')
+  await openMobileNavIfNeeded(page)
   await page.getByRole('button', { name: /Saved/i }).click()
   await page.locator('#stays').scrollIntoViewIfNeeded()
   await expect(page.getByText('Kyoto')).toBeVisible()
+  await openMobileNavIfNeeded(page)
   await page.getByRole('button', { name: /Saved/i }).click()
   await page.getByLabel('Search curated journeys').fill('zzzz-no-trip')
   await expect(page.getByText('No journeys found')).toBeVisible()
   await page.getByRole('button', { name: 'Reset discovery' }).click()
   await expect(page.getByText('Amalfi Coast')).toBeVisible()
+  await assertNoOverflow(page)
 })
 
 test('showcase walkthrough', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chromium', 'single showcase recording')
-  await page.video()
   await page.goto('/'); await page.waitForTimeout(3500)
   await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight * .20, behavior: 'smooth' })); await page.waitForTimeout(3500)
   await page.getByRole('button', { name: 'Culture' }).click(); await page.waitForTimeout(2500)
