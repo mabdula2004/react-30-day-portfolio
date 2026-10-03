@@ -1,0 +1,59 @@
+name: Day 05 Travel Quality Gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'day-05-travel-booking/**'
+      - '!day-05-travel-booking/artifacts/**'
+      - '!day-05-travel-booking/showcase/**'
+      - '!day-05-travel-booking/package-lock.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-and-qa:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: day-05-travel-booking
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+      - name: Production build
+        run: npm run build
+      - name: Install Chromium and ffmpeg
+        run: |
+          npx playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Desktop tablet mobile interaction QA
+        run: npm run test:e2e
+      - name: Export 30+ second real-project showcase
+        run: |
+          mkdir -p showcase
+          VIDEO=$(find test-results -type f -name video.webm -path '*showcase*desktop*' | head -1)
+          test -n "$VIDEO"
+          ffmpeg -y -i "$VIDEO" -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1" -r 30 -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p showcase/roamly-travel-booking-showcase.mp4
+          DURATION=$(ffprobe -v error -show_entries format=duration -of csv=p=0 showcase/roamly-travel-booking-showcase.mp4 | cut -d. -f1)
+          test "$DURATION" -ge 30
+      - name: Commit verified QA evidence and showcase
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package-lock.json artifacts/*.png showcase/roamly-travel-booking-showcase.mp4
+          git diff --cached --quiet || (git commit -m 'chore(day05): add verified responsive QA and showcase' && git push)
+      - name: Upload QA bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: day05-roamly-qa
+          path: |
+            day-05-travel-booking/artifacts/
+            day-05-travel-booking/showcase/
+            day-05-travel-booking/test-results/
+          retention-days: 14
